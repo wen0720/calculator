@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+@import "mixins";
+@import "default";
+
+
+// pages
+
+body {
+    -webkit-overflow-scrolling: touch;
+    -webkit-font-smoothing: antialiased;
+}
+
+.cal{
+    max-width: 350px;
+    background: #0d2143;
+    border-radius: 20px;
+    margin: 20px auto;
+    padding: 30px 30px 30px 0px;
+    font-size: 24px;
+    color: #fff;
+    @include clearfix;
+}
+
+.left{
+    width: 80%;
+    float: left;
+    ul{
+        @include clearfix;
+    }
+    li{
+        width: 30%;
+        margin: 15px 1.67%;
+        float: right;                
+    }
+}
+
+.right{
+    width: 20%;
+    float: right;    
+    li{
+        width: 100%;        
+        float: left;                
+        margin: 15px 0;
+        background: #041936;
+        border-radius: 10px;
+    }
+}
+
+.btnList{
+    text-align: center;
+    li{        
+        height: 50px;
+        line-height: 50px;             
+    }    
+}
+
+.screen{
+    height: 60px;
+    text-align: right;
+    position: relative;
+    line-height: 60px;
+    font-size: 28px;
+}
+
+.bottom{
+    ul{
+        @include clearfix;
+        li{
+            float: left;
+            text-align: center;
+            height: 50px;
+            line-height: 50px;            
+            &:nth-child(1){
+                width: 25%;
+                color:#00C4FF;
+            }
+            &:nth-child(2){
+                width: 25%;
+                color:#00C4FF;
+            }
+            &:nth-child(3){
+                text-align: right;
+                width: 50%;
+                padding: 0px 25px;
+                border-radius: 12px;                                                
+                background: linear-gradient(to right, #00c4ff 0%,#6c00ff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */                
+            }
+        }
+    }
+}
+
+.history{
+    position: absolute;
+    top: -30px;
+    right: 0;
+    font-size: 15px;
+}

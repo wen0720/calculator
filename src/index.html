@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>9 x 9 乘法表</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+<body>    
+    <div id="calculator" class="cal">
+        <div class="screen">   
+            {{ screenTxt }}         
+            <div class="history">
+                {{ temp }}
+            </div>
+        </div>
+        <div class="left">
+            <ul class="btnList">
+                <li @click="record" v-for="num in filterCalBtn" :key="num">
+                    {{ num }}
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <ul class="btnList">
+                <li @click="tempStore($event);" v-for="item in mark" :key="item">
+                    {{ item }}
+                </li>
+            </ul>   
+        </div>
+        <div class="bottom">    
+            <ul>
+                <li @click="clearAll">AC</li>
+                <li @click="back"><i class="fas fa-backspace"></i></li>                                            
+                <li @click="tempStore($event);output();">=</li>
+            </ul>       
+        </div>
+    </div>    
+</body>
+</html>
