@@ -112,8 +112,15 @@ new Vue({
         
         output () {                       
             if(this.final.toString().length > 9){
-                let fixedFinal = this.final.toFixed(9)
-                this.screenTxt = fixedFinal + '';    
+                if(this.final.toString().indexOf('.') === -1){
+                    this.screenTxt = this.final.toString().slice(0, 9) + '...'
+                }else {
+                    let numBeforeDotLength = this.final.toString().split('.')[0].length
+                    let numAfterDot = this.final.toString().split('.')[1]
+                    this.screenTxt = this.final.toString().split('.')[0] + '.' + numAfterDot.slice(0, 9-numBeforeDotLength) + '...'
+                }
+                // let fixedFinal = this.final.toFixed(9)
+                // this.screenTxt = fixedFinal + '';    
             }else{
                 this.screenTxt = this.final + '';
             }             
