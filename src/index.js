@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import './sass/m.scss'
 
-Vue.filter('currency', (val) => {    
-    if(val.indexOf('.') === -1){
+Vue.filter('currency', (val) => {        
+    if(val.indexOf('.') === -1 && val !== '錯誤'){
         const re = '\\d(?=(\\d{' + 3 + '})+' + '$' + ')'
         return Number(val).toFixed(Math.max(0)).replace(new RegExp(re, 'g'), '$&,')
     }else {
@@ -29,7 +29,7 @@ new Vue({
         }        
     },
     methods: {
-        record(e){
+        record (e) {
             if(this.hadOutput){
                 this.final = 0  
                 this.screenTxt = '0'                      
@@ -66,11 +66,7 @@ new Vue({
         },
 
         tempStore (e) { 
-            if(this.hadOutput){
-                this.final = 0  // 此時若 final 維持不變，在直接按運算子時，
-                                // 會直接把現有的 screenTxt 拿去運算一次，所以設 0，讓他跑 if 前面的那段                                   
-                this.hadOutput = false
-            }
+            
 
             if( e.target.textContent.trim() !== '='){
                 this.lastClick = e.target.textContent.trim();
@@ -85,7 +81,7 @@ new Vue({
             if(Number(this.final) === 0){   // 如果目前加總為 0
                 this.final = Number(this.screenTxt.replace(/\+|-|×|÷/g, ''))  // 加總值就等於 input 的資料，因為預設資料為0，
                                                                               // 一開始避免0去跟第1個數字運算
-            }else{
+            }else if(!this.hadOutput){
                 switch ( this.method || e.target.textContent.trim() ) {
                     case '+':                    
                         this.final = this.accPlusMinus('plus', Number(this.final), Number(this.screenTxt.replace(/\+|-|×|÷/g, '')))
@@ -97,10 +93,18 @@ new Vue({
                         this.final = this.accMul( Number(this.final), Number(this.screenTxt.replace(/\+|-|×|÷/g, '')))                         
                         break
                     case '÷': 
-                        this.final = this.accDiv( Number(this.final), Number(this.screenTxt.replace(/\+|-|×|÷/g, ''))) 
+                        if ( Number(this.screenTxt.replace(/\+|-|×|÷/g, '')) === 0) {
+                            this.final = '錯誤'
+                        }else{
+                            this.final = this.accDiv( Number(this.final), Number(this.screenTxt.replace(/\+|-|×|÷/g, ''))) 
+                        }                        
                         break
                 }    
             }            
+
+            if(this.hadOutput){                
+                this.hadOutput = false
+            }
 
             this.method = e.target.textContent.trim() === '=' ? '' : e.target.textContent.trim();   // 紀錄準備計算的方式
             this.screenTxt = '0'  // 重置數字
@@ -156,7 +160,7 @@ new Vue({
                     break
                 case 'minus':
                     return Math.round(num1 * m - num2 * m) / m
-                    break                    
+                    break
             }                                        
         },
 
